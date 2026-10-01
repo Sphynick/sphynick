@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Sprite, CAT_ROWS, CAT_PALETTE } from './pixel-sprite';
+
+const NAV_LINKS = [
+  { name: 'Work', href: '#projects' },
+  { name: 'Writing', href: '#products' },
+  { name: 'Praise', href: '#testimonials' },
+  { name: 'About', href: '#about' },
+  { name: 'Contact', href: '#contact' },
+];
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -8,143 +17,76 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      setIsMenuOpen(false);
-      
-      const id = href.replace('#', '');
-      
-      if (location.pathname !== '/') {
-        navigate('/' + href);
-        return;
-      }
-
-      const element = document.getElementById(id);
-      if (element) {
-        const offset = 80; // Offset for fixed navbar
-        const bodyRect = document.body.getBoundingClientRect().top;
-        const elementRect = element.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-        
-        window.history.pushState(null, '', href);
-      }
-    } else {
-      setIsMenuOpen(false);
+    e.preventDefault();
+    setIsMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/' + href);
+      return;
+    }
+    const el = document.getElementById(href.slice(1));
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 72;
+      window.scrollTo({ top, behavior: 'smooth' });
+      window.history.pushState(null, '', href);
     }
   };
 
-  const navLinks = [
-    { name: 'Portfolio', href: '#projects' },
-    { name: 'Products', href: '#products' },
-    { name: 'Impact', href: '#testimonials' },
-    { name: 'About', href: '#about' },
-  ];
-
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled || location.pathname !== '/' ? 'glass shadow-sm py-3' : 'bg-transparent py-5'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="flex items-center gap-2 group">
-            <span className={`font-black text-2xl tracking-tighter uppercase ${isScrolled || location.pathname !== '/' ? 'text-[#141414]' : 'text-white'}`}>
-              NICK NJAU <span className="text-[#F27D26]">.</span>
-            </span>
-          </Link>
+    <nav
+      className={`fixed top-0 inset-x-0 z-50 transition-colors ${
+        isScrolled || isMenuOpen ? 'bg-ink border-b-2 border-line' : 'bg-transparent'
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <Link to="/" className="flex items-center gap-3 group" onClick={() => setIsMenuOpen(false)}>
+          <Sprite rows={CAT_ROWS} palette={CAT_PALETTE} size={2} className="group-hover:bob" />
+          <span className="font-pixel text-[11px] tracking-tight">
+            NICK<span className="text-amber">_</span>NJAU
+          </span>
+        </Link>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={`text-[10px] font-black uppercase tracking-[0.2em] transition-colors ${isScrolled || location.pathname !== '/' ? 'text-gray-600 hover:text-[#F27D26]' : 'text-gray-100 hover:text-[#F27D26]'}`}
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="flex items-center gap-3">
-              <a 
-                href="https://wa.me/254769504732"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#F27D26] text-white px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all flex items-center gap-2 shadow-xl shadow-[#F27D26]/20"
-              >
-                Message me on WhatsApp
-              </a>
-              <a 
-                href="mailto:sphynick@gmail.com"
-                className={`text-xs font-black uppercase tracking-widest transition-all px-5 py-2.5 rounded-full border ${isScrolled || location.pathname !== '/' ? 'border-gray-200 text-gray-700 hover:bg-[#141414] hover:text-white' : 'border-white/20 text-white hover:bg-white/10'}`}
-              >
-                Email
-              </a>
-            </div>
-          </div>
-
-          {/* Mobile toggle */}
-          <div className="md:hidden">
-            <button 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`${isScrolled ? 'text-gray-900' : 'text-white'} p-2`}
+        <div className="hidden md:flex items-center gap-7">
+          {NAV_LINKS.map((l) => (
+            <a
+              key={l.name}
+              href={l.href}
+              onClick={(e) => handleNavClick(e, l.href)}
+              className="font-retro text-xl text-mute hover:text-amber transition-colors"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                )}
-              </svg>
-            </button>
-          </div>
+              <span className="text-line">/</span>
+              {l.name.toLowerCase()}
+            </a>
+          ))}
         </div>
+
+        <button
+          className="md:hidden font-pixel text-[10px] px-3 py-2 px-box"
+          onClick={() => setIsMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? 'X' : 'MENU'}
+        </button>
       </div>
 
-      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden glass border-t border-gray-200 animate-in slide-in-from-top-4 duration-200">
-          <div className="px-4 pt-2 pb-6 space-y-2">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="block px-3 py-4 text-xs font-black uppercase tracking-[0.2em] text-[#141414] border-b border-gray-100"
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="pt-4 px-3 space-y-3">
-              <a 
-                href="https://wa.me/254769504732"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsMenuOpen(false)}
-                className="block w-full text-center bg-[#F27D26] text-white px-5 py-4 rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-[#F27D26]/20"
-              >
-                Message me on WhatsApp
-              </a>
-              <a 
-                href="mailto:sphynick@gmail.com"
-                onClick={() => setIsMenuOpen(false)}
-                className="block w-full text-center border border-gray-100 text-[#141414] px-5 py-4 rounded-2xl font-black uppercase tracking-widest bg-gray-50"
-              >
-                Email Nick
-              </a>
-            </div>
-          </div>
+        <div className="md:hidden bg-ink border-t-2 border-line px-4 pb-6 pt-2">
+          {NAV_LINKS.map((l) => (
+            <a
+              key={l.name}
+              href={l.href}
+              onClick={(e) => handleNavClick(e, l.href)}
+              className="block font-retro text-2xl py-3 border-b-2 border-line text-paper"
+            >
+              <span className="text-amber">&gt;</span> {l.name.toLowerCase()}
+            </a>
+          ))}
         </div>
       )}
     </nav>
