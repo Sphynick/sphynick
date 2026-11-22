@@ -1,26 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Sprite, CAT_ROWS, CAT_PALETTE } from './pixel-sprite';
+import { Menu, X } from 'lucide-react';
+import { scrollToId } from '../lib/scroll';
 
 const NAV_LINKS = [
-  { name: 'Work', href: '#projects' },
-  { name: 'Writing', href: '#products' },
-  { name: 'Praise', href: '#testimonials' },
+  { name: 'Work', href: '#work' },
+  { name: 'Services', href: '#services' },
   { name: 'About', href: '#about' },
+  { name: 'Writing', href: '#updates' },
   { name: 'Contact', href: '#contact' },
 ];
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [active, setActive] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Highlight the nav link for the section currently in view.
+  useEffect(() => {
+    const els = NAV_LINKS.map((l) => document.getElementById(l.href.slice(1))).filter(
+      (el): el is HTMLElement => !!el
+    );
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, [location.pathname]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -29,67 +46,70 @@ const Navbar: React.FC = () => {
       navigate('/' + href);
       return;
     }
-    const el = document.getElementById(href.slice(1));
-    if (el) {
-      const top = el.getBoundingClientRect().top + window.scrollY - 72;
-      window.scrollTo({ top, behavior: 'smooth' });
-      window.history.pushState(null, '', href);
-    }
+    if (scrollToId(href.slice(1))) window.history.pushState(null, '', href);
   };
 
   return (
-    <nav
-      className={`fixed top-0 inset-x-0 z-50 transition-colors ${
-        isScrolled || isMenuOpen ? 'bg-ink border-b-2 border-line' : 'bg-transparent'
+    <header
+      className={`sticky top-0 z-50 transition-colors ${
+        isScrolled || isMenuOpen
+          ? 'bg-ink/85 backdrop-blur-md border-b border-line'
+          : 'bg-ink/0 border-b border-transparent'
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-3 group" onClick={() => setIsMenuOpen(false)}>
-          <Sprite rows={CAT_ROWS} palette={CAT_PALETTE} size={2} className="group-hover:bob" />
-          <span className="font-pixel text-[11px] tracking-tight">
-            NICK<span className="text-amber">_</span>NJAU
-          </span>
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between" aria-label="Primary">
+        <Link to="/" className="flex items-center gap-2.5" onClick={() => setIsMenuOpen(false)}>
+          <span className="w-8 h-8 rounded-lg bg-amber text-ink grid place-items-center font-bold text-sm">N</span>
+          <span className="font-semibold tracking-tight">Nick Njau</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map((l) => (
             <a
               key={l.name}
               href={l.href}
               onClick={(e) => handleNavClick(e, l.href)}
-              className="font-retro text-xl text-mute hover:text-amber transition-colors"
+              aria-current={active === l.href.slice(1) ? 'true' : undefined}
+              className={`px-3 py-2 text-sm rounded-full transition-colors ${
+                active === l.href.slice(1) ? 'text-amber' : 'text-mute hover:text-paper'
+              }`}
             >
-              <span className="text-line">/</span>
-              {l.name.toLowerCase()}
+              {l.name}
             </a>
           ))}
+          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn btn-primary ml-3 !py-2 !px-4 !text-sm">
+            Book a call
+          </a>
         </div>
 
         <button
-          className="md:hidden font-pixel text-[10px] px-3 py-2 px-box"
+          className="md:hidden p-2 rounded-lg border border-line"
           onClick={() => setIsMenuOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={isMenuOpen}
         >
-          {isMenuOpen ? 'X' : 'MENU'}
+          {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
-      </div>
+      </nav>
 
       {isMenuOpen && (
-        <div className="md:hidden bg-ink border-t-2 border-line px-4 pb-6 pt-2">
+        <div className="md:hidden bg-ink border-t border-line px-4 pb-5 pt-2">
           {NAV_LINKS.map((l) => (
             <a
               key={l.name}
               href={l.href}
               onClick={(e) => handleNavClick(e, l.href)}
-              className="block font-retro text-2xl py-3 border-b-2 border-line text-paper"
+              className="block py-3 text-lg border-b border-line text-paper"
             >
-              <span className="text-amber">&gt;</span> {l.name.toLowerCase()}
+              {l.name}
             </a>
           ))}
+          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn btn-primary w-full mt-4">
+            Book a Discovery Call
+          </a>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 
