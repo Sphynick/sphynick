@@ -64,7 +64,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     liveUrl: 'https://www.prelanschools.com/',
     // [TODO] Add an embed URL, e.g. 'https://www.youtube.com/embed/VIDEO_ID' or a Loom embed.
     videoUrl: '',
-    accent: 'from-amber/40 via-amber/10 to-transparent',
+    accent: 'from-[#4f8bff] to-[#1b4fd1]',
   },
   {
     id: 'traceai-space',
@@ -86,7 +86,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     stack: ['React', 'Gemini AI', 'D3.js', 'Tailwind CSS'],
     liveUrl: 'https://www.traceai.space/',
-    accent: 'from-violet-400/30 via-violet-400/5 to-transparent',
+    accent: 'from-[#818cf8] to-[#4338ca]',
   },
   {
     id: 'yield-plus',
@@ -108,7 +108,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     stack: ['Next.js', 'Node.js', 'Web3', 'Ethers.js'],
     liveUrl: 'https://www.yieldplus.online/',
-    accent: 'from-mint/30 via-mint/5 to-transparent',
+    accent: 'from-[#2dd4bf] to-[#0f766e]',
   },
   {
     id: 'comms-hub',
@@ -130,7 +130,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     stack: ['Next.js', 'Firebase', 'Canva SDK', 'Node.js'],
     repoUrl: 'https://github.com/sphynick', // [TODO] deep-link the exact repo
-    accent: 'from-sky-400/30 via-sky-400/5 to-transparent',
+    accent: 'from-[#38bdf8] to-[#0e7490]',
   },
   {
     id: 'prompt-assistant',
@@ -151,7 +151,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     stack: ['Gemini API', 'OpenAI', 'Node.js', 'React'],
     repoUrl: 'https://github.com/sphynick', // [TODO] deep-link the exact repo
-    accent: 'from-rose-400/30 via-rose-400/5 to-transparent',
+    accent: 'from-[#1b4fd1] to-[#0c1a3d]',
   },
 ];
 
@@ -300,5 +300,36 @@ export const FAQS: FAQItem[] = [
     question: 'Are your projects open source?',
     answer:
       'Some personal and community projects are on my GitHub profile. Client work stays private unless the client agrees otherwise.',
+  },
+];
+
+/* -------------------------------------------------------------------------- */
+/*  ABOUT STATS (all derived from content on this page)                       */
+/* -------------------------------------------------------------------------- */
+export const STATS: { label: string; value?: number; prefix?: string; suffix?: string; display?: string }[] = [
+  { value: CASE_STUDIES.length, label: 'Case studies' },
+  { value: SERVICES.length, label: 'Service packages' },
+  { value: 24, prefix: '<', suffix: 'h', label: 'Typical first reply' },
+  { display: '2–4 wks', label: 'Typical web platform launch' },
+];
+
+/* -------------------------------------------------------------------------- */
+/*  PROCESS — [TODO] edit to match how you actually work                      */
+/* -------------------------------------------------------------------------- */
+export const PROCESS: { step: string; title: string; text: string }[] = [
+  {
+    step: '01',
+    title: 'Discover',
+    text: 'We talk through your goals, users and constraints. You get a clear scope, timeline and proposal before any work begins.',
+  },
+  {
+    step: '02',
+    title: 'Build',
+    text: 'I design and build in short cycles, sharing working previews so you can give feedback early and nothing surprises you at the end.',
+  },
+  {
+    step: '03',
+    title: 'Launch & hand over',
+    text: 'Go-live, a walkthrough for your team, and documentation, so you can run and update everything without a developer.',
   },
 ];

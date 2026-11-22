@@ -70,7 +70,7 @@ const CaseStudyModal: React.FC<Props> = ({ study, onClose, onStartSimilar }) => 
             role="dialog"
             aria-modal="true"
             aria-labelledby="case-study-title"
-            className="relative w-full sm:max-w-3xl max-h-[92vh] overflow-y-auto bg-panel border border-line rounded-t-3xl sm:rounded-3xl"
+            className="relative w-full sm:max-w-3xl max-h-[92vh] overflow-y-auto bg-white border border-line rounded-t-3xl sm:rounded-3xl"
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
@@ -80,20 +80,20 @@ const CaseStudyModal: React.FC<Props> = ({ study, onClose, onStartSimilar }) => 
               ref={closeRef}
               onClick={onClose}
               aria-label="Close case study"
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-ink/80 border border-line hover:border-amber hover:text-amber transition-colors"
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/90 border border-line hover:border-brand hover:text-brand transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className={`h-28 sm:h-36 bg-gradient-to-br ${study.accent} border-b border-line`} />
+            <div className={`h-24 sm:h-32 bg-gradient-to-br ${study.accent} border-b border-line`} />
 
-            <div className="p-6 sm:p-9 space-y-8 -mt-10 relative">
+            <div className="p-6 sm:p-9 space-y-8">
               <header className="space-y-3">
-                <p className="eyebrow">{study.category}</p>
+                <p className="kicker">{study.category}</p>
                 <h3 id="case-study-title" className="text-2xl sm:text-4xl font-bold tracking-tight">
                   {study.title}
                 </h3>
-                <p className="text-mute leading-relaxed">{study.summary}</p>
+                <p className="text-body leading-relaxed">{study.summary}</p>
                 <div className="flex flex-wrap gap-2 pt-1">
                   {study.stack.map((t) => (
                     <span key={t} className="chip">
@@ -104,7 +104,7 @@ const CaseStudyModal: React.FC<Props> = ({ study, onClose, onStartSimilar }) => 
               </header>
 
               {/* Video walkthrough slot */}
-              <div className="rounded-2xl overflow-hidden border border-line bg-ink aspect-video">
+              <div className="rounded-2xl overflow-hidden border border-line bg-soft aspect-video">
                 {safeVideo ? (
                   <iframe
                     src={safeVideo}
@@ -117,10 +117,10 @@ const CaseStudyModal: React.FC<Props> = ({ study, onClose, onStartSimilar }) => 
                 ) : (
                   <div className="w-full h-full grid place-items-center text-center p-6 border-2 border-dashed border-line">
                     <div className="space-y-2">
-                      <Play className="w-8 h-8 mx-auto text-mute" />
-                      <p className="text-sm text-mute">Video walkthrough coming soon</p>
+                      <Play className="w-8 h-8 mx-auto text-body" />
+                      <p className="text-sm text-body">Video walkthrough coming soon</p>
                       {import.meta.env.DEV && (
-                        <p className="font-mono text-xs text-amber">
+                        <p className="font-mono text-xs text-brand">
                           [TODO] set videoUrl for “{study.title}” in constants.tsx
                         </p>
                       )}
@@ -131,26 +131,26 @@ const CaseStudyModal: React.FC<Props> = ({ study, onClose, onStartSimilar }) => 
 
               <div className="space-y-7">
                 <section>
-                  <h4 className="eyebrow mb-2">{labels.problem}</h4>
-                  <p className="text-paper/90 leading-relaxed">{study.problem}</p>
+                  <h4 className="kicker mb-2">{labels.problem}</h4>
+                  <p className="text-body leading-relaxed">{study.problem}</p>
                 </section>
                 <section>
-                  <h4 className="eyebrow mb-3">{labels.solution}</h4>
+                  <h4 className="kicker mb-3">{labels.solution}</h4>
                   <ul className="space-y-2.5">
                     {study.solution.map((s) => (
-                      <li key={s} className="flex gap-3 text-paper/90 leading-relaxed">
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-amber shrink-0" />
+                      <li key={s} className="flex gap-3 text-body leading-relaxed">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-brand shrink-0" />
                         {s}
                       </li>
                     ))}
                   </ul>
                 </section>
                 <section>
-                  <h4 className="eyebrow mb-3">{labels.impact}</h4>
+                  <h4 className="kicker mb-3">{labels.impact}</h4>
                   <ul className="space-y-2.5">
                     {study.impact.map((s) => (
-                      <li key={s} className="flex gap-3 text-paper/90 leading-relaxed">
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-mint shrink-0" />
+                      <li key={s} className="flex gap-3 text-body leading-relaxed">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                         {s}
                       </li>
                     ))}
@@ -163,12 +163,12 @@ const CaseStudyModal: React.FC<Props> = ({ study, onClose, onStartSimilar }) => 
                   Start a similar project <ArrowRight className="w-4 h-4" />
                 </button>
                 {study.liveUrl && (
-                  <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost mt-6">
+                  <a href={study.liveUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline mt-6">
                     Visit live site <ArrowUpRight className="w-4 h-4" />
                   </a>
                 )}
                 {study.repoUrl && (
-                  <a href={study.repoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-ghost mt-6">
+                  <a href={study.repoUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline mt-6">
                     <Github className="w-4 h-4" /> View on GitHub
                   </a>
                 )}

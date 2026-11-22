@@ -4,9 +4,10 @@ import { Menu, X } from 'lucide-react';
 import { scrollToId } from '../lib/scroll';
 
 const NAV_LINKS = [
-  { name: 'Work', href: '#work' },
-  { name: 'Services', href: '#services' },
   { name: 'About', href: '#about' },
+  { name: 'Work', href: '#work' },
+  { name: 'Process', href: '#process' },
+  { name: 'Services', href: '#services' },
   { name: 'Writing', href: '#updates' },
   { name: 'Contact', href: '#contact' },
 ];
@@ -27,6 +28,7 @@ const Navbar: React.FC = () => {
 
   // Highlight the nav link for the section currently in view.
   useEffect(() => {
+    setActive('');
     const els = NAV_LINKS.map((l) => document.getElementById(l.href.slice(1))).filter(
       (el): el is HTMLElement => !!el
     );
@@ -51,39 +53,39 @@ const Navbar: React.FC = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors ${
-        isScrolled || isMenuOpen
-          ? 'bg-ink/85 backdrop-blur-md border-b border-line'
-          : 'bg-ink/0 border-b border-transparent'
-      }`}
+      className={`sticky top-0 z-50 bg-white transition-shadow ${
+        isScrolled || isMenuOpen ? 'shadow-[0_6px_24px_-12px_rgba(12,26,61,0.25)]' : ''
+      } border-b border-line`}
     >
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between" aria-label="Primary">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between" aria-label="Primary">
         <Link to="/" className="flex items-center gap-2.5" onClick={() => setIsMenuOpen(false)}>
-          <span className="w-8 h-8 rounded-lg bg-amber text-ink grid place-items-center font-bold text-sm">N</span>
-          <span className="font-semibold tracking-tight">Nick Njau</span>
+          <span className="w-9 h-9 rounded-md bg-brand text-white grid place-items-center font-extrabold">N</span>
+          <span className="font-extrabold text-navy tracking-tight text-lg">Nick Njau</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-1">
           {NAV_LINKS.map((l) => (
             <a
               key={l.name}
               href={l.href}
               onClick={(e) => handleNavClick(e, l.href)}
               aria-current={active === l.href.slice(1) ? 'true' : undefined}
-              className={`px-3 py-2 text-sm rounded-full transition-colors ${
-                active === l.href.slice(1) ? 'text-amber' : 'text-mute hover:text-paper'
+              className={`px-3 py-2 text-sm font-bold transition-colors border-b-2 ${
+                active === l.href.slice(1)
+                  ? 'text-brand border-brand'
+                  : 'text-navy border-transparent hover:text-brand'
               }`}
             >
               {l.name}
             </a>
           ))}
-          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn btn-primary ml-3 !py-2 !px-4 !text-sm">
+          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn btn-primary ml-4 !py-2.5 !px-5 !text-sm">
             Book a call
           </a>
         </div>
 
         <button
-          className="md:hidden p-2 rounded-lg border border-line"
+          className="lg:hidden p-2 rounded-md border border-line text-navy"
           onClick={() => setIsMenuOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={isMenuOpen}
@@ -93,13 +95,13 @@ const Navbar: React.FC = () => {
       </nav>
 
       {isMenuOpen && (
-        <div className="md:hidden bg-ink border-t border-line px-4 pb-5 pt-2">
+        <div className="lg:hidden bg-white border-t border-line px-4 pb-5 pt-2">
           {NAV_LINKS.map((l) => (
             <a
               key={l.name}
               href={l.href}
               onClick={(e) => handleNavClick(e, l.href)}
-              className="block py-3 text-lg border-b border-line text-paper"
+              className="block py-3 text-lg font-bold border-b border-line text-navy"
             >
               {l.name}
             </a>

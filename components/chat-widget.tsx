@@ -38,16 +38,16 @@ const ChatWidget: React.FC = () => {
         <div
           role="dialog"
           aria-label="Chat assistant"
-          className="w-[calc(100vw-2.5rem)] sm:w-96 h-[480px] flex flex-col bg-panel border border-line rounded-2xl shadow-2xl overflow-hidden"
+          className="w-[calc(100vw-2.5rem)] sm:w-96 h-[480px] flex flex-col bg-white border border-line rounded-2xl shadow-2xl overflow-hidden"
         >
           <div className="flex items-center justify-between px-4 py-3 border-b border-line">
             <div className="flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-mint" />
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
               <span className="font-semibold text-sm">Ask Nick&apos;s assistant</span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-1 text-mute hover:text-amber"
+              className="p-1 text-body hover:text-brand"
               aria-label="Close chat"
             >
               <X className="w-4 h-4" />
@@ -60,15 +60,15 @@ const ChatWidget: React.FC = () => {
                 <div
                   className={`max-w-[85%] px-3.5 py-2.5 text-sm leading-relaxed rounded-2xl ${
                     m.role === 'user'
-                      ? 'bg-amber text-ink rounded-br-sm'
-                      : 'bg-ink text-paper border border-line rounded-bl-sm'
+                      ? 'bg-brand text-white rounded-br-sm'
+                      : 'bg-soft text-navy border border-line rounded-bl-sm'
                   }`}
                 >
                   {m.text}
                 </div>
               </div>
             ))}
-            {isLoading && <div className="text-sm text-mute">Typing…</div>}
+            {isLoading && <div className="text-sm text-body">Typing…</div>}
           </div>
 
           <div className="p-3 border-t border-line flex gap-2">
@@ -94,7 +94,7 @@ const ChatWidget: React.FC = () => {
         <button
           onClick={() => setIsOpen(true)}
           aria-label="Open chat assistant"
-          className="btn btn-ghost bg-panel shadow-xl !px-4"
+          className="btn btn-outline bg-white shadow-xl !px-4"
         >
           <MessageSquare className="w-4 h-4" />
           <span className="hidden sm:inline">Ask a question</span>

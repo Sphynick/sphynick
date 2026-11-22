@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout';
 import HomePage from './pages/home-page';
+import PrivacyPage from './pages/privacy-page';
 
 const App: React.FC = () => {
   return (
@@ -10,6 +10,8 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="*" element={<HomePage />} />
         </Routes>
       </Layout>
     </Router>

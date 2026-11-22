@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0e0f12" />
+  <meta name="theme-color" content="#1b4fd1" />
 
   <title>Nick Njau | Software Engineer &amp; AI Systems Builder in Nairobi</title>
   <meta name="description" content="Nairobi software engineer &amp; AI systems builder. Fast web platforms, custom apps and AI automation that grow revenue and admissions and cut manual work." />
@@ -26,7 +26,7 @@
   <meta name="twitter:description" content="Fast web platforms, custom apps and AI automation that grow revenue and admissions and cut manual work." />
   <meta name="twitter:image" content="https://nicknjau.shop/og-image.png" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffb454'/%3E%3Cpath fill='%230e0f12' d='M9 24V8h3.4l7.2 10V8H23v16h-3.4l-7.2-10v10z'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231b4fd1'/%3E%3Cpath fill='%23fff' d='M9 24V8h3.4l7.2 10V8H23v16h-3.4l-7.2-10v10z'/%3E%3C/svg%3E" />
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -75,59 +75,56 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!-- Mulish is the maintained successor of Muli, the font Amplify uses -->
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
+          fontFamily: { sans: ['Mulish', 'system-ui', 'sans-serif'] },
           colors: {
-            ink: '#0e0f12',
-            panel: '#16181d',
-            line: '#2a2d35',
-            paper: '#e8e6df',
-            mute: '#8a8d96',
-            amber: '#ffb454',
-            mint: '#7ee0a8',
+            brand: { DEFAULT: '#1b4fd1', dark: '#143a9e', light: '#dbe6ff' },
+            navy: '#0c1a3d',
+            body: '#4a5675',
+            soft: '#f3f6fc',
+            line: '#e1e7f3',
           },
         },
       },
     };
   </script>
   <style>
-    html { background: #0e0f12; }
-    body {
-      background: #0e0f12;
-      color: #e8e6df;
-      font-family: 'Inter', system-ui, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-    ::selection { background: #ffb454; color: #0e0f12; }
-    :focus-visible { outline: 2px solid #ffb454; outline-offset: 2px; }
+    html { background: #fff; }
+    body { background: #fff; color: #4a5675; font-family: 'Mulish', system-ui, sans-serif; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+    h1, h2, h3, h4 { color: #0c1a3d; line-height: 1.2; }
+    ::selection { background: #1b4fd1; color: #fff; }
+    :focus-visible { outline: 3px solid #7aa2ff; outline-offset: 2px; }
     section[id] { scroll-margin-top: 72px; }
 
-    .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #ffb454; }
-    .card { background: #16181d; border: 1px solid #2a2d35; border-radius: 20px; }
-    .chip { display: inline-block; font-size: .75rem; padding: .25rem .65rem; border: 1px solid #2a2d35; border-radius: 9999px; color: #b3b5bd; }
+    .kicker { font-size: .75rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #1b4fd1; }
+    .kicker-light { color: #bcd0ff; }
+    .card { background: #fff; border: 1px solid #e1e7f3; border-radius: 12px; box-shadow: 0 14px 34px -22px rgba(12,26,61,.35); }
+    .chip { display: inline-block; font-size: .72rem; font-weight: 700; padding: .2rem .65rem; border-radius: 9999px; background: #eef3ff; color: #1b4fd1; }
 
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 9999px; padding: .8rem 1.4rem; font-weight: 600; font-size: .9rem; transition: transform .15s, background .15s, border-color .15s, color .15s; white-space: nowrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1.6rem; border-radius: 6px; font-weight: 700; font-size: .9rem; letter-spacing: .02em; transition: background .15s, color .15s, border-color .15s, transform .15s; white-space: nowrap; }
     .btn:hover { transform: translateY(-1px); }
-    .btn-primary { background: #ffb454; color: #0e0f12; }
-    .btn-primary:hover { background: #ffc47a; }
-    .btn-ghost { border: 1px solid #2a2d35; color: #e8e6df; }
-    .btn-ghost:hover { border-color: #ffb454; color: #ffb454; }
+    .btn-primary { background: #1b4fd1; color: #fff; }
+    .btn-primary:hover { background: #143a9e; }
+    .btn-white { background: #fff; color: #1b4fd1; }
+    .btn-white:hover { background: #eaf0ff; }
+    .btn-outline { border: 2px solid #1b4fd1; color: #1b4fd1; }
+    .btn-outline:hover { background: #1b4fd1; color: #fff; }
+    .btn-outline-light { border: 2px solid rgba(255,255,255,.75); color: #fff; }
+    .btn-outline-light:hover { background: #fff; color: #1b4fd1; }
 
-    .label { display: block; font-size: .8rem; font-weight: 500; color: #b3b5bd; margin-bottom: .4rem; }
-    .field { width: 100%; background: #0e0f12; border: 1px solid #2a2d35; border-radius: 12px; padding: .7rem .9rem; font-size: .9rem; color: #e8e6df; }
-    .field::placeholder { color: #5d6069; }
-    .field:focus { outline: none; border-color: #ffb454; box-shadow: 0 0 0 3px rgba(255,180,84,.15); }
-    select.field { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%238a8d96' stroke-width='2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .9rem center; padding-right: 2.2rem; }
+    .label { display: block; font-size: .8rem; font-weight: 700; color: #0c1a3d; margin-bottom: .4rem; }
+    .field { width: 100%; background: #fff; border: 1px solid #cfd8ec; border-radius: 8px; padding: .75rem .95rem; font-size: .92rem; color: #0c1a3d; }
+    .field::placeholder { color: #8a95b3; }
+    .field:focus { outline: none; border-color: #1b4fd1; box-shadow: 0 0 0 3px rgba(27,79,209,.18); }
+    select.field { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%234a5675' stroke-width='2'%3E%3Cpath d='m1 1 5 5 5-5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .9rem center; padding-right: 2.2rem; }
 
-    ::-webkit-scrollbar { width: 12px; background: #0e0f12; }
-    ::-webkit-scrollbar-thumb { background: #2a2d35; border: 3px solid #0e0f12; border-radius: 8px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { scrollbar-width: none; }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn:hover { transform: none; } }
   </style>
 </head>

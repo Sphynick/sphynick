@@ -110,7 +110,7 @@ const IntakeForm: React.FC<Props> = ({ service, onServiceChange }) => {
 
   const err = (k: keyof Fields) =>
     errors[k] ? (
-      <p id={`err-${k}`} className="text-xs text-rose-400 mt-1.5">
+      <p id={`err-${k}`} className="text-xs text-red-600 mt-1.5">
         {errors[k]}
       </p>
     ) : null;
@@ -121,7 +121,7 @@ const IntakeForm: React.FC<Props> = ({ service, onServiceChange }) => {
         <h3 id="intake-heading" className="text-xl font-bold tracking-tight">
           Tell me about your project
         </h3>
-        <p className="text-sm text-mute mt-1">Takes about two minutes. I reply within one business day.</p>
+        <p className="text-sm text-body mt-1">Takes about two minutes. I reply within one business day.</p>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-5">
@@ -194,18 +194,18 @@ const IntakeForm: React.FC<Props> = ({ service, onServiceChange }) => {
 
       <div role="status" aria-live="polite">
         {status === 'sent' && (
-          <p className="flex items-start gap-2 text-sm text-mint">
+          <p className="flex items-start gap-2 text-sm text-emerald-700">
             <Check className="w-4 h-4 mt-0.5 shrink-0" /> Thanks. Your brief is in and I will reply within one business day.
           </p>
         )}
         {status === 'handoff' && (
-          <p className="text-sm text-mint">
+          <p className="text-sm text-emerald-700">
             WhatsApp opened with your brief prefilled. Press send there to finish. Prefer email?{' '}
             <a href={mailto} className="underline">Send it by email instead</a>.
           </p>
         )}
         {status === 'error' && (
-          <p className="text-sm text-rose-400">
+          <p className="text-sm text-red-600">
             That did not go through. Please{' '}
             <a href={waLink(buildMessage())} target="_blank" rel="noopener noreferrer" className="underline">send it on WhatsApp</a>{' '}
             or <a href={mailto} className="underline">by email</a>.
