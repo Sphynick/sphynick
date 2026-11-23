@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   ArrowRight,
@@ -32,7 +32,7 @@ import CaseStudyModal from '../components/case-study-modal';
 import IntakeForm from '../components/intake-form';
 import AnimatedNumber from '../components/animated-number';
 import Newsletter from '../components/newsletter';
-import { scrollToId } from '../lib/scroll';
+import { SECTION_BY_PATH, scrollToId } from '../lib/scroll';
 
 const ICONS: Record<ServiceTier['icon'], React.ElementType> = {
   globe: Globe,
@@ -95,20 +95,23 @@ const HomePage: React.FC = () => {
   const [openStudy, setOpenStudy] = useState<CaseStudy | null>(null);
   const [service, setService] = useState<ServiceChoice>('web-platform');
   const sliderRef = useRef<HTMLDivElement>(null);
-  const { hash } = useLocation();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  // Arriving from another page (e.g. /privacy) with a #section.
+  // Clean section URLs (/work, /contact...) scroll to their section.
   useEffect(() => {
-    if (!hash) return;
-    const t = window.setTimeout(() => scrollToId(hash.slice(1)), 60);
+    const id = SECTION_BY_PATH[pathname];
+    if (!id) return;
+    const t = window.setTimeout(() => scrollToId(id), 60);
     return () => window.clearTimeout(t);
-  }, [hash]);
+  }, [pathname]);
 
   const closeStudy = useCallback(() => setOpenStudy(null), []);
 
-  const go = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const go = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
     e.preventDefault();
-    scrollToId(id);
+    if (pathname === path) scrollToId(SECTION_BY_PATH[path]);
+    else navigate(path);
   };
 
   const chooseService = (id: ServiceId) => {
@@ -144,10 +147,10 @@ const HomePage: React.FC = () => {
               operations, with software their teams can actually run.
             </p>
             <div className="flex flex-wrap gap-3 mt-8">
-              <a href="#contact" onClick={(e) => go(e, 'contact')} className="btn btn-white">
+              <a href="/contact" onClick={(e) => go(e, '/contact')} className="btn btn-white">
                 <Calendar className="w-4 h-4" /> Book a Discovery Call
               </a>
-              <a href="#work" onClick={(e) => go(e, 'work')} className="btn btn-outline-light">
+              <a href="/work" onClick={(e) => go(e, '/work')} className="btn btn-outline-light">
                 See Case Studies <ArrowRight className="w-4 h-4" />
               </a>
             </div>
@@ -373,12 +376,12 @@ const HomePage: React.FC = () => {
       <section id="testimonials" className="py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <SectionHeading center kicker="Client words" title="What clients say" />
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {TESTIMONIALS.map((t) => (
               <motion.figure
                 key={t.id}
                 {...reveal}
-                className={`rounded-xl p-7 flex flex-col gap-5 bg-white ${
+                className={`rounded-xl p-7 flex flex-col gap-5 bg-white w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] ${
                   t.isPlaceholder ? 'border-2 border-dashed border-brand/50' : 'border border-line shadow-sm'
                 }`}
               >

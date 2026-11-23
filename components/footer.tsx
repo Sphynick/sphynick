@@ -4,11 +4,11 @@ import { Github, Mail, MessageSquare } from 'lucide-react';
 import { SITE, waLink } from '../constants';
 
 const LINKS = [
-  { name: 'About', hash: '#about' },
-  { name: 'Work', hash: '#work' },
-  { name: 'Process', hash: '#process' },
-  { name: 'Services', hash: '#services' },
-  { name: 'Contact', hash: '#contact' },
+  { name: 'About', path: '/about' },
+  { name: 'Work', path: '/work' },
+  { name: 'Process', path: '/process' },
+  { name: 'Services', path: '/services' },
+  { name: 'Contact', path: '/contact' },
 ];
 
 const Footer: React.FC = () => (
@@ -30,7 +30,7 @@ const Footer: React.FC = () => (
         <ul className="space-y-2 text-sm">
           {LINKS.map((l) => (
             <li key={l.name}>
-              <Link to={{ pathname: '/', hash: l.hash }} className="hover:text-white transition-colors">
+              <Link to={l.path} className="hover:text-white transition-colors">
                 {l.name}
               </Link>
             </li>

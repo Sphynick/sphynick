@@ -219,7 +219,7 @@ export const SERVICES: ServiceTier[] = [
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 't1',
-    quote: 'Paste a real client quote here: one or two sentences about the result they got.',
+    quote: 'Paste a real client quote here: the result they got (more enquiries, admissions, time saved).',
     author: '[Client name]',
     role: '[Role]',
     company: '[Organisation]',
@@ -236,6 +236,22 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: 't3',
     quote: 'Paste a real client quote here: what it was like to work with you.',
+    author: '[Client name]',
+    role: '[Role]',
+    company: '[Organisation]',
+    isPlaceholder: true,
+  },
+  {
+    id: 't4',
+    quote: 'Paste a real client quote here: how the launch and handover went.',
+    author: '[Client name]',
+    role: '[Role]',
+    company: '[Organisation]',
+    isPlaceholder: true,
+  },
+  {
+    id: 't5',
+    quote: 'Paste a real client quote here: why they would recommend you to another business.',
     author: '[Client name]',
     role: '[Role]',
     company: '[Organisation]',

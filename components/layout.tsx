@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from './navbar';
 import Footer from './footer';
+import { SECTION_BY_PATH } from '../lib/scroll';
 import ChatWidget from './chat-widget';
 
 interface LayoutProps {
@@ -9,12 +10,12 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const { pathname, hash } = useLocation();
+  const { pathname } = useLocation();
 
-  // New page without a hash target: start at the top.
+  // New page that is not a home-page section: start at the top.
   useEffect(() => {
-    if (!hash) window.scrollTo(0, 0);
-  }, [pathname, hash]);
+    if (!SECTION_BY_PATH[pathname]) window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className="relative min-h-screen flex flex-col bg-white">

@@ -10,3 +10,14 @@ export function scrollToId(id: string): boolean {
   });
   return true;
 }
+
+/** Clean URL paths that scroll to a section of the one-page home. */
+export const SECTION_BY_PATH: Record<string, string> = {
+  '/about': 'about',
+  '/work': 'work',
+  '/process': 'process',
+  '/services': 'services',
+  '/reviews': 'testimonials',
+  '/writing': 'updates',
+  '/contact': 'contact',
+};

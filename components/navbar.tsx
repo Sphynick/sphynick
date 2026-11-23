@@ -4,13 +4,15 @@ import { Menu, X } from 'lucide-react';
 import { scrollToId } from '../lib/scroll';
 
 const NAV_LINKS = [
-  { name: 'About', href: '#about' },
-  { name: 'Work', href: '#work' },
-  { name: 'Process', href: '#process' },
-  { name: 'Services', href: '#services' },
-  { name: 'Writing', href: '#updates' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'About', path: '/about', id: 'about' },
+  { name: 'Work', path: '/work', id: 'work' },
+  { name: 'Process', path: '/process', id: 'process' },
+  { name: 'Services', path: '/services', id: 'services' },
+  { name: 'Writing', path: '/writing', id: 'updates' },
+  { name: 'Contact', path: '/contact', id: 'contact' },
 ];
+type NavLink = (typeof NAV_LINKS)[number];
+const CONTACT = NAV_LINKS[5];
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,7 +31,7 @@ const Navbar: React.FC = () => {
   // Highlight the nav link for the section currently in view.
   useEffect(() => {
     setActive('');
-    const els = NAV_LINKS.map((l) => document.getElementById(l.href.slice(1))).filter(
+    const els = NAV_LINKS.map((l) => document.getElementById(l.id)).filter(
       (el): el is HTMLElement => !!el
     );
     if (!els.length) return;
@@ -41,14 +43,11 @@ const Navbar: React.FC = () => {
     return () => io.disconnect();
   }, [location.pathname]);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, link: NavLink) => {
     e.preventDefault();
     setIsMenuOpen(false);
-    if (location.pathname !== '/') {
-      navigate('/' + href);
-      return;
-    }
-    if (scrollToId(href.slice(1))) window.history.pushState(null, '', href);
+    if (location.pathname === link.path) scrollToId(link.id);
+    else navigate(link.path);
   };
 
   return (
@@ -67,11 +66,11 @@ const Navbar: React.FC = () => {
           {NAV_LINKS.map((l) => (
             <a
               key={l.name}
-              href={l.href}
-              onClick={(e) => handleNavClick(e, l.href)}
-              aria-current={active === l.href.slice(1) ? 'true' : undefined}
+              href={l.path}
+              onClick={(e) => handleNavClick(e, l)}
+              aria-current={active === l.id ? 'true' : undefined}
               className={`px-3 py-2 text-sm font-bold transition-colors border-b-2 ${
-                active === l.href.slice(1)
+                active === l.id
                   ? 'text-brand border-brand'
                   : 'text-navy border-transparent hover:text-brand'
               }`}
@@ -79,7 +78,7 @@ const Navbar: React.FC = () => {
               {l.name}
             </a>
           ))}
-          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn btn-primary ml-4 !py-2.5 !px-5 !text-sm">
+          <a href="/contact" onClick={(e) => handleNavClick(e, CONTACT)} className="btn btn-primary ml-4 !py-2.5 !px-5 !text-sm">
             Book a call
           </a>
         </div>
@@ -99,14 +98,14 @@ const Navbar: React.FC = () => {
           {NAV_LINKS.map((l) => (
             <a
               key={l.name}
-              href={l.href}
-              onClick={(e) => handleNavClick(e, l.href)}
+              href={l.path}
+              onClick={(e) => handleNavClick(e, l)}
               className="block py-3 text-lg font-bold border-b border-line text-navy"
             >
               {l.name}
             </a>
           ))}
-          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn btn-primary w-full mt-4">
+          <a href="/contact" onClick={(e) => handleNavClick(e, CONTACT)} className="btn btn-primary w-full mt-4">
             Book a Discovery Call
           </a>
         </div>
